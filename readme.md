@@ -1,4 +1,5 @@
 FANTASY LEAGUE
+The base URL is "https://udaan2416.herokuapp.com/"
 
 1. POST route => /signup
 Payloads:
