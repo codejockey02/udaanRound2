@@ -29,6 +29,7 @@ User array in message
 Payloads:
 playername,
 points
+{By default, 11 players have been created namely, player1, player2,....player11}
 
 Response:
 message
