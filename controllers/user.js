@@ -67,4 +67,44 @@ router.post('/login', async (req, res) => {
     }
 });
 
+router.post('/admin-login', async (req, res) => {
+    const {
+        uname,
+        password,
+    } = req.body;
+    try {
+        if (uname == 'admin' && password == '123') {
+            const activeUsers = await userDB.find();
+            res.json({
+                message: activeUsers
+            });
+        } else {
+            res.json({
+                message: 'Incorrect Admin Credentials'
+            });
+        }
+    } catch (err) {
+        res.json({
+            message: 'Internal Server Error'
+        });
+    }
+});
+
+// router.post('/addPlayers', async (req, res) => {
+//     const {
+//         player1,
+//         player2,
+//         player3,
+//         player4,
+//         player5,
+//         player6,
+//         player7,
+//         player8,
+//         player9,
+//         player10,
+//         player11,
+//     } = req.body;
+
+// });
+
 module.exports = router;
