@@ -39,3 +39,10 @@ playername,
 
 Response:
 message
+
+6. POST route => /fetch-score
+Payloads:
+all 11 playername
+
+Response:
+message
