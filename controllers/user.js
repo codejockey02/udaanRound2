@@ -88,7 +88,7 @@ router.post('/admin-login', async (req, res) => {
     }
 });
 
-router, post('/assign-points', async (req, res) => {
+router.post('/assign-points', async (req, res) => {
     const {
         uname,
         points,
