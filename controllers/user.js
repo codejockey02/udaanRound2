@@ -2,6 +2,7 @@ const express = require('express');
 const genTok = require('randomstring');
 
 const userDB = require('../models/userSchema');
+const playerDB = require('../models/players');
 
 const register = require('./utils/register');
 
@@ -90,13 +91,13 @@ router.post('/admin-login', async (req, res) => {
 
 router.post('/assign-points', async (req, res) => {
     const {
-        uname,
+        playername,
         points,
     } = req.body;
     let check;
     try {
-        check = await userDB.findOne({
-            uname,
+        check = await playerDB.findOne({
+            playername
         }, {
             points: 1
         });
@@ -105,16 +106,54 @@ router.post('/assign-points', async (req, res) => {
             message: 'Error making database call'
         });
     }
-    await userDB.updateOne({
-        uname,
+    await playerDB.updateOne({
+        playername,
     }, {
         $set: {
             points: points + check.points,
         }
     });
     res.json({
-        message: 'Points added to user'
+        message: 'Points added to player'
     });
+});
+
+router.post('/create-players', async (req, res) => {
+    const {
+        playername,
+    } = req.body;
+    const newPlayer = new playerDB({
+        playername,
+        points: 0,
+    });
+    let check;
+    try {
+        check = await playerDB.findOne({
+            playername,
+        }, {
+            _id: 1
+        });
+    } catch (err) {
+        res.json({
+            message: 'Error making database call'
+        });
+    }
+    try {
+        if (check == null) {
+            await newPlayer.save();
+            res.json({
+                message: 'Player created'
+            });
+        } else {
+            res.json({
+                message: 'Player already exist'
+            });
+        }
+    } catch (err) {
+        res.json({
+            message: 'Error making database call'
+        });
+    }
 });
 // router.post('/addPlayers', async (req, res) => {
 //     const {

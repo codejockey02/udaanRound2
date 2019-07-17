@@ -26,8 +26,15 @@ User array in message
 
 4. POST route => /assign-points
 Payloads:
-uname,
+playername,
 points
+
+Response:
+message
+
+5. POST route => /create-players
+Payloads:
+playername,
 
 Response:
 message
