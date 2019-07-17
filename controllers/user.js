@@ -51,8 +51,9 @@ router.post('/login', async (req, res) => {
                     token,
                 }
             });
+            const activeUsers = await userDB.find();
             res.json({
-                message: token,
+                message: activeUsers
             });
         } else {
             res.json({
@@ -101,6 +102,7 @@ router.post('/assign-points', async (req, res) => {
         }, {
             points: 1
         });
+        console.log(check);
     } catch (err) {
         res.json({
             message: 'Error making database call'
@@ -110,7 +112,7 @@ router.post('/assign-points', async (req, res) => {
         playername,
     }, {
         $set: {
-            points: points + check.points,
+            points,
         }
     });
     res.json({
