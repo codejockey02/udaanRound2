@@ -1,12 +1,13 @@
 const userDB = require('../../models/userSchema');
 
-exports.register = async (name, uname, password, contact) => {
+exports.register = async (uname, password) => {
     const newUser = new userDB({
-        name,
         uname,
         password,
-        contact,
         token: "null",
+        score: 0,
+        credit: 100,
+        points: 0,
     });
     let check;
     try {

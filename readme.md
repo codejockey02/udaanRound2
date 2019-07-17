@@ -2,10 +2,8 @@ FANTASY LEAGUE
 
 1. POST route => /signup
 Payloads:
-name
 uname
 password
-contact
 
 Response:
 message
@@ -25,3 +23,11 @@ password: '123'
 
 Response:
 User array in message
+
+4. POST route => /assign-points
+Payloads:
+uname,
+points
+
+Response:
+message

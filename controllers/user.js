@@ -9,12 +9,10 @@ const router = new express.Router();
 
 router.post('/signup', async (req, res) => {
     const {
-        name,
         uname,
         password,
-        contact
     } = req.body;
-    register.register(name, uname, password, contact)
+    register.register(uname, password)
         .then(result => res.json({
             message: result.message
         }))
@@ -90,6 +88,34 @@ router.post('/admin-login', async (req, res) => {
     }
 });
 
+router, post('/assign-points', async (req, res) => {
+    const {
+        uname,
+        points,
+    } = req.body;
+    let check;
+    try {
+        check = await userDB.findOne({
+            uname,
+        }, {
+            points: 1
+        });
+    } catch (err) {
+        res.json({
+            message: 'Error making database call'
+        });
+    }
+    await userDB.updateOne({
+        uname,
+    }, {
+        $set: {
+            points: points + check.points,
+        }
+    });
+    res.json({
+        message: 'Points added to user'
+    });
+});
 // router.post('/addPlayers', async (req, res) => {
 //     const {
 //         player1,
