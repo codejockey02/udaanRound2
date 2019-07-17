@@ -10,10 +10,10 @@ exports.register = async (name, uname, password, contact) => {
     });
     let check;
     try {
-        check = await db.findOne({
-            worker_id
+        check = await userDB.findOne({
+            uname
         }, {
-            user_name: 1
+            password: 1
         });
     } catch (err) {
         return {
@@ -21,10 +21,16 @@ exports.register = async (name, uname, password, contact) => {
         };
     }
     try {
-        await newUser.save();
-        return {
-            message: 'User Registered'
-        };
+        if (check != null) {
+            return {
+                message: 'User already exist',
+            };
+        } else {
+            await newUser.save();
+            return {
+                message: 'User Registered'
+            };
+        }
     } catch (err) {
         return {
             message: 'Internal Server Error'

@@ -1,5 +1,4 @@
 const express = require('express');
-const random = require('random');
 const genTok = require('randomstring');
 
 const userDB = require('../models/userSchema');
@@ -31,7 +30,7 @@ router.post('/login', async (req, res) => {
     } = req.body;
     let check;
     try {
-        check = userDB.findOne({
+        check = await userDB.findOne({
             uname,
         }, {
             password: 1,
@@ -43,7 +42,8 @@ router.post('/login', async (req, res) => {
         });
     }
     try {
-        if (password.toString() == check.password) {
+        console.log(check);
+        if (password == check.password) {
             const token = genTok.generate();
             await userDB.updateOne({
                 uname,
